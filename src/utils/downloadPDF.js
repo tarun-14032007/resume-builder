@@ -1,10 +1,10 @@
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 
-// Grabs the preview div, turns it into a canvas, then saves as PDF.
-// Using scale: 2 so the PDF doesn't look blurry on hi-res screens.
+// Export the resume preview section as a downloadable A4 PDF
 export async function downloadResumeAsPDF(previewRef, filename = 'my-resume.pdf') {
   const element = previewRef.current
+
   if (!element) return
 
   try {
@@ -16,7 +16,6 @@ export async function downloadResumeAsPDF(previewRef, filename = 'my-resume.pdf'
 
     const imgData = canvas.toDataURL('image/png')
 
-    // Standard A4 dimensions in mm
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
