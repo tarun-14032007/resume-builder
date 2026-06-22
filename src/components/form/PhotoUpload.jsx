@@ -2,9 +2,21 @@ function PhotoUpload({ photo, onUpload }) {
   function handleFile(e) {
     const file = e.target.files[0]
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = event => onUpload(event.target.result)
-    reader.readAsDataURL(file)
+
+    // Resize to max 400px before storing — keeps it small enough for memory
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      const MAX = 400
+      const scale = Math.min(1, MAX / Math.max(img.width, img.height))
+      const canvas = document.createElement('canvas')
+      canvas.width  = img.width  * scale
+      canvas.height = img.height * scale
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      onUpload(canvas.toDataURL('image/jpeg', 0.85))
+      URL.revokeObjectURL(url)
+    }
+    img.src = url
   }
 
   return (

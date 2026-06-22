@@ -1,0 +1,133 @@
+/* Resume strength score card */
+.score-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.score-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.score-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.score-pct { font-size: 20px; font-weight: 800; }
+
+.score-bar-bg {
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+.score-label-text { font-size: 11px; font-weight: 600; }
+.score-tips {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.score-tips li { font-size: 11px; color: var(--text-muted); }
+
+/* Preview panel */
+.preview-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Toolbar above the A4 page */
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.ats-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.ats-ok   { background: #dcfce7; color: #15803d; }
+.ats-warn { background: #fef9c3; color: #92400e; }
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 13px;
+  transition: background var(--transition);
+}
+.download-btn:hover:not(:disabled) { background: var(--accent-hover); }
+.download-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.download-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Scroll container around the A4 page */
+.preview-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  padding-bottom: 32px;
+}
+
+.preview-empty {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-faint);
+  font-size: 14px;
+}
+.preview-empty-icon { font-size: 36px; opacity: 0.5; }
+
+/* The A4 resume page — always white, never dark-mode */
+.resume-page {
+  width: 794px;
+  min-height: 1123px;
+  background: #ffffff !important;
+  color: #1a1a1a;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

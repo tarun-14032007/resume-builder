@@ -1,0 +1,31 @@
+@media (max-width: 900px) {
+  .editor-layout {
+    flex-direction: column;
+    padding: 12px 14px 40px;
+  }
+  .form-panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    position: static;
+  }
+  .template-tabs { flex-wrap: wrap; }
+  .preview-scroll { overflow-x: auto; }
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 14px; gap: 8px; }
+  .tab-btn { padding: 4px 10px; font-size: 11px; }
+}
+
+@media (max-width: 600px) {
+  .brand-name { display: none; }
+  .template-tabs { gap: 3px; }
+  .editor-layout { padding: 10px 10px 40px; }
+}
+
+@media (max-width: 480px) {
+  .tab-btn { padding: 4px 8px; font-size: 10px; }
+  .save-indicator span { display: none; }
+}

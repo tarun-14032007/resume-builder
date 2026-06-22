@@ -1,22 +1,14 @@
-// ── Shared link metadata used across all templates ───────────
 export const LINK_META = {
   linkedin:  { icon: '🔗', label: 'LinkedIn'  },
   github:    { icon: '🐙', label: 'GitHub'    },
   portfolio: { icon: '🌐', label: 'Portfolio' },
 }
 
-// ── Classic Template ─────────────────────────────────────────
-// Traditional one-column resume.
-// • Name is large and centered
-// • Contact info and links in a centered row underneath
-// • ALL-CAPS section headings with a thin bottom border
-// • Skills displayed as "React · Node.js · Python" inline text
 function ClassicTemplate({ data }) {
   const filledLinks = Object.entries(data.links).filter(([, url]) => url)
 
   return (
     <div className="classic">
-      {/* ── Header ── */}
       <header className="cl-header">
         {data.photo && (
           <img src={data.photo} alt="Profile" className="cl-photo" />
@@ -25,9 +17,13 @@ function ClassicTemplate({ data }) {
         {data.jobTitle && <p className="cl-job-title">{data.jobTitle}</p>}
 
         <div className="cl-contact">
-          {data.email && <span>{data.email}</span>}
+          {data.email && (
+            <span className="cl-contact-item">📧 {data.email}</span>
+          )}
           {data.email && data.phone && <span className="cl-dot">·</span>}
-          {data.phone && <span>{data.phone}</span>}
+          {data.phone && (
+            <span className="cl-contact-item">📱 {data.phone}</span>
+          )}
         </div>
 
         {filledLinks.length > 0 && (
@@ -43,7 +39,6 @@ function ClassicTemplate({ data }) {
 
       <div className="cl-rule" />
 
-      {/* ── About ── */}
       {data.summary && (
         <section className="cl-section">
           <h2 className="cl-heading">About Me</h2>
@@ -51,7 +46,6 @@ function ClassicTemplate({ data }) {
         </section>
       )}
 
-      {/* ── Education ── */}
       {data.education && (
         <section className="cl-section">
           <h2 className="cl-heading">Education</h2>
@@ -59,17 +53,17 @@ function ClassicTemplate({ data }) {
         </section>
       )}
 
-      {/* ── Skills ── */}
       {data.skills.length > 0 && (
         <section className="cl-section">
           <h2 className="cl-heading">Skills</h2>
-          <p className="cl-para cl-skills-inline">
-            {data.skills.join(' · ')}
-          </p>
+          <div className="cl-skills">
+            {data.skills.map((s, i) => (
+              <span key={i} className="cl-skill-chip">{s}</span>
+            ))}
+          </div>
         </section>
       )}
 
-      {/* ── Experience ── */}
       {data.experience.length > 0 && (
         <section className="cl-section">
           <h2 className="cl-heading">Experience</h2>
@@ -86,7 +80,6 @@ function ClassicTemplate({ data }) {
         </section>
       )}
 
-      {/* ── Projects ── */}
       {data.projects.length > 0 && (
         <section className="cl-section">
           <h2 className="cl-heading">Projects</h2>
@@ -94,25 +87,43 @@ function ClassicTemplate({ data }) {
             <div key={proj.id} className="cl-entry">
               <div className="cl-entry-top">
                 <strong className="cl-entry-company">{proj.name}</strong>
+              </div>
+              {proj.techStack && (
+                <div className="cl-tech-row">
+                  {proj.techStack.split(',').map(t => (
+                    <span key={t} className="cl-tech-chip">{t.trim()}</span>
+                  ))}
+                </div>
+              )}
+              {proj.description && <p className="cl-para">{proj.description}</p>}
+              <div className="cl-entry-links">
                 {proj.githubLink && (
-                  <a href={proj.githubLink} className="cl-entry-link"
-                     target="_blank" rel="noreferrer">GitHub ↗</a>
+                  <a href={proj.githubLink} className="cl-entry-link" target="_blank" rel="noreferrer">
+                    🐙 GitHub
+                  </a>
+                )}
+                {proj.liveLink && (
+                  <a href={proj.liveLink} className="cl-entry-link" target="_blank" rel="noreferrer">
+                    🌐 Live Demo
+                  </a>
                 )}
               </div>
-              {proj.techStack   && <p className="cl-entry-role">{proj.techStack}</p>}
-              {proj.description && <p className="cl-para">{proj.description}</p>}
             </div>
           ))}
         </section>
       )}
 
-      {/* ── Certifications ── */}
-      {data.certifications.filter(Boolean).length > 0 && (
+      {data.certifications.filter(c => c.name).length > 0 && (
         <section className="cl-section">
           <h2 className="cl-heading">Certifications</h2>
           <ul className="cl-cert-list">
-            {data.certifications.filter(Boolean).map((c, i) => (
-              <li key={i}>{c}</li>
+            {data.certifications.filter(c => c.name).map(c => (
+              <li key={c.id}>
+                <span>{c.name}</span>
+                {(c.issuer || c.year) && (
+                  <span className="cl-cert-meta"> — {[c.issuer, c.year].filter(Boolean).join(', ')}</span>
+                )}
+              </li>
             ))}
           </ul>
         </section>

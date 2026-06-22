@@ -1,24 +1,30 @@
-import PhotoUpload         from './form/PhotoUpload'
-import BasicInfoForm       from './form/BasicInfoForm'
-import SummaryForm         from './form/SummaryForm'
-import SkillTags           from './form/SkillTags'
-import LinksForm           from './form/LinksForm'
-import ExperienceForm      from './form/ExperienceForm'
-import ProjectsForm        from './form/ProjectsForm'
-import CertificationsForm  from './form/CertificationsForm'
-import ResumeScore         from './ResumeScore'
+import PhotoUpload        from './form/PhotoUpload'
+import BasicInfoForm      from './form/BasicInfoForm'
+import SummaryForm        from './form/SummaryForm'
+import SkillTags          from './form/SkillTags'
+import LinksForm          from './form/LinksForm'
+import ExperienceForm     from './form/ExperienceForm'
+import ProjectsForm       from './form/ProjectsForm'
+import CertificationsForm from './form/CertificationsForm'
+import ResumeScore        from './ResumeScore'
 
-// This component is intentionally thin — each section is its own file,
-// so adding/removing a section is one line here, not a 400-line hunt.
-function ResumeForm({ data, handlers }) {
+function ResumeForm({ data, handlers, onClear }) {
+  function handleClear() {
+    if (window.confirm('Clear all form data? This cannot be undone.')) {
+      onClear()
+    }
+  }
+
   return (
     <div className="form-panel">
       <div className="form-panel-header">
         <h2 className="panel-title">Your Details</h2>
+        <button className="clear-btn" onClick={handleClear} title="Clear all fields">
+          Reset
+        </button>
       </div>
 
       <div className="form-panel-body">
-        {/* Resume strength indicator at the top of the form */}
         <ResumeScore data={data} />
 
         <PhotoUpload
@@ -46,7 +52,7 @@ function ResumeForm({ data, handlers }) {
           <textarea
             id="education"
             rows={3}
-            placeholder="e.g. B.Tech CSE — VIT Vellore (2021–2025)"
+            placeholder="e.g. B.Tech Computer Science — State University (2021–2025)"
             value={data.education}
             onChange={e => handlers.updateField('education', e.target.value)}
           />
@@ -57,6 +63,7 @@ function ResumeForm({ data, handlers }) {
           onAdd={handlers.addExperience}
           onUpdate={handlers.updateExperience}
           onRemove={handlers.removeExperience}
+          onMove={handlers.moveExperience}
         />
 
         <ProjectsForm
@@ -64,6 +71,7 @@ function ResumeForm({ data, handlers }) {
           onAdd={handlers.addProject}
           onUpdate={handlers.updateProject}
           onRemove={handlers.removeProject}
+          onMove={handlers.moveProject}
         />
 
         <CertificationsForm

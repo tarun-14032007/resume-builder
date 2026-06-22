@@ -2,19 +2,19 @@ const TEMPLATES = [
   { id: 'classic',   label: 'Classic'   },
   { id: 'modern',    label: 'Modern'    },
   { id: 'minimal',   label: 'Minimal'   },
-  { id: 'developer', label: 'Developer' },
+  { id: 'developer', label: 'Dev'       },
+  { id: 'corporate', label: 'Corporate' },
+  { id: 'student',   label: 'Student'   },
 ]
 
-function Navbar({ activeTemplate, onTemplateChange, theme, onToggleTheme }) {
+function Navbar({ activeTemplate, onTemplateChange, theme, onToggleTheme, savedAt }) {
   return (
     <nav className="navbar">
-      {/* Brand */}
       <div className="navbar-brand">
         <span className="brand-icon">📄</span>
         <span className="brand-name">ResumeForge</span>
       </div>
 
-      {/* Template switcher — each button is visually distinct when active */}
       <div className="template-tabs">
         {TEMPLATES.map(t => (
           <button
@@ -27,10 +27,18 @@ function Navbar({ activeTemplate, onTemplateChange, theme, onToggleTheme }) {
         ))}
       </div>
 
-      {/* Dark / Light toggle */}
-      <button className="theme-toggle" onClick={onToggleTheme} title="Toggle theme">
-        {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-      </button>
+      <div className="navbar-controls">
+        {savedAt && (
+          <div className="save-indicator" title="Changes saved automatically">
+            <div className="save-dot" />
+            <span>Saved</span>
+          </div>
+        )}
+
+        <button className="theme-toggle" onClick={onToggleTheme} title="Toggle dark/light mode">
+          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+        </button>
+      </div>
     </nav>
   )
 }

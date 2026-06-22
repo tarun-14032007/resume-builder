@@ -1,90 +1,79 @@
 import { useState, useEffect } from 'react'
 
-// Tiny unique ID generator — avoids pulling in uuid just for this
 function uid() {
   return Math.random().toString(36).slice(2, 9)
 }
 
 const DEFAULT_DATA = {
   name:      '',
-  jobTitle:  '',           // e.g. "Software Engineer" — shown under name
+  jobTitle:  '',
   email:     '',
   phone:     '',
   summary:   '',
-  photo:     null,         // base64 string once uploaded
+  photo:     null,
   education: '',
-  skills:    [],           // array so the UI can show chips
+  skills:    [],
   links: {
     linkedin:  '',
     github:    '',
     portfolio: '',
   },
-  experience:     [],      // [{ id, company, role, duration, description }]
-  projects:       [],      // [{ id, name, techStack, description, githubLink }]
-  certifications: [],      // ['AWS Cloud Foundations', ...]
+  experience:     [],
+  projects:       [],
+  certifications: [],
 }
 
-// ── Resume Strength Score ────────────────────────────────────
-// Max 100 pts — used by ResumeScore component.
 export function computeScore(data) {
   let score  = 0
   const tips = []
 
-  // Name  (10 pts)
   if (data.name.trim()) {
     score += 10
   } else {
     tips.push('Add your full name')
   }
 
-  // Email + Phone  (10 pts: 5 each)
   if (data.email.trim()) { score += 5 } else { tips.push('Add your email') }
   if (data.phone.trim()) { score += 5 } else { tips.push('Add your phone') }
 
-  // Summary  (15 pts: 5 for any, +10 for 100+ chars)
   if (data.summary.trim()) {
     score += 5
     if (data.summary.length >= 100) {
       score += 10
     } else {
-      tips.push('Expand summary to 100+ characters')
+      tips.push('Expand summary to at least 100 characters')
     }
   } else {
     tips.push('Write a professional summary')
   }
 
-  // Skills  (15 pts: 5 for 1+, 10 for 5+)
   if (data.skills.length >= 5) {
     score += 15
   } else if (data.skills.length >= 1) {
     score += 5
-    tips.push('Add at least 5 skills for a higher score')
+    tips.push('Add at least 5 skills for a better score')
   } else {
-    tips.push('Add skills (React, Python, etc.)')
+    tips.push('Add your key skills')
   }
 
-  // Experience  (15 pts)
   if (data.experience.length > 0) {
     score += 15
   } else {
     tips.push('Add work or internship experience')
   }
 
-  // Projects  (15 pts)
   if (data.projects.length > 0) {
     score += 15
   } else {
     tips.push('Add at least one project')
   }
 
-  // Education  (10 pts)
   if (data.education.trim()) {
     score += 10
   } else {
     tips.push('Fill in your education')
   }
 
-  // Links  (5 pts: at least one)
   const filledLinks = Object.values(data.links).filter(Boolean).length
   if (filledLinks >= 1) {
     score += 5
@@ -92,47 +81,57 @@ export function computeScore(data) {
     tips.push('Add a LinkedIn or GitHub link')
   }
 
-  return { score, tips }
+  // Bonus for photo
+  if (data.photo) score += 5
+  else if (tips.length < 4) tips.push('Add a profile photo')
+
+  return { score: Math.min(score, 100), tips }
 }
 
-// ── Main hook ────────────────────────────────────────────────
 export function useResumeStorage() {
   const [resumeData,     setResumeData]     = useState(DEFAULT_DATA)
   const [activeTemplate, setActiveTemplate] = useState('classic')
   const [theme,          setTheme]          = useState('light')
+  const [savedAt,        setSavedAt]        = useState(null)
 
-  // Load whatever the user saved last time
   useEffect(() => {
-    const saved         = localStorage.getItem('resumeData')
-    const savedTemplate = localStorage.getItem('resumeTemplate')
-    const savedTheme    = localStorage.getItem('resumeTheme')
+    try {
+      const saved         = localStorage.getItem('resumeData')
+      const savedTemplate = localStorage.getItem('resumeTemplate')
+      const savedTheme    = localStorage.getItem('resumeTheme')
 
-    if (saved)         setResumeData(JSON.parse(saved))
-    if (savedTemplate) setActiveTemplate(savedTemplate)
-    if (savedTheme)    setTheme(savedTheme)
+      if (saved)         setResumeData(JSON.parse(saved))
+      if (savedTemplate) setActiveTemplate(savedTemplate)
+      if (savedTheme)    setTheme(savedTheme)
+    } catch {
+      // corrupted storage — start fresh
+    }
   }, [])
 
-  // Auto-save whenever content changes
   useEffect(() => {
-    localStorage.setItem('resumeData', JSON.stringify(resumeData))
+    try {
+      // Skip saving photo to localStorage to avoid quota issues
+      const dataToSave = { ...resumeData, photo: null }
+      localStorage.setItem('resumeData', JSON.stringify(dataToSave))
+      setSavedAt(Date.now())
+    } catch {
+      // localStorage quota exceeded — silently continue
+    }
   }, [resumeData])
 
   useEffect(() => {
     localStorage.setItem('resumeTemplate', activeTemplate)
   }, [activeTemplate])
 
-  // Keep the HTML [data-theme] attribute in sync so CSS vars kick in
   useEffect(() => {
     localStorage.setItem('resumeTheme', theme)
     document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
 
-  // ── Scalar fields (name, email, phone, summary, education, photo, jobTitle)
   function updateField(field, value) {
     setResumeData(prev => ({ ...prev, [field]: value }))
   }
 
-  // ── Links
   function updateLink(platform, value) {
     setResumeData(prev => ({
       ...prev,
@@ -140,7 +139,6 @@ export function useResumeStorage() {
     }))
   }
 
-  // ── Skills
   function addSkill(skill) {
     setResumeData(prev => ({ ...prev, skills: [...prev.skills, skill] }))
   }
@@ -151,7 +149,6 @@ export function useResumeStorage() {
     }))
   }
 
-  // ── Experience
   function addExperience() {
     const blank = { id: uid(), company: '', role: '', duration: '', description: '' }
     setResumeData(prev => ({ ...prev, experience: [...prev.experience, blank] }))
@@ -168,10 +165,19 @@ export function useResumeStorage() {
       experience: prev.experience.filter(e => e.id !== id),
     }))
   }
+  function moveExperience(id, direction) {
+    setResumeData(prev => {
+      const arr = [...prev.experience]
+      const idx = arr.findIndex(e => e.id === id)
+      const target = direction === 'up' ? idx - 1 : idx + 1
+      if (target < 0 || target >= arr.length) return prev
+      ;[arr[idx], arr[target]] = [arr[target], arr[idx]]
+      return { ...prev, experience: arr }
+    })
+  }
 
-  // ── Projects
   function addProject() {
-    const blank = { id: uid(), name: '', techStack: '', description: '', githubLink: '' }
+    const blank = { id: uid(), name: '', techStack: '', description: '', githubLink: '', liveLink: '' }
     setResumeData(prev => ({ ...prev, projects: [...prev.projects, blank] }))
   }
   function updateProject(id, field, value) {
@@ -186,25 +192,40 @@ export function useResumeStorage() {
       projects: prev.projects.filter(p => p.id !== id),
     }))
   }
+  function moveProject(id, direction) {
+    setResumeData(prev => {
+      const arr = [...prev.projects]
+      const idx = arr.findIndex(p => p.id === id)
+      const target = direction === 'up' ? idx - 1 : idx + 1
+      if (target < 0 || target >= arr.length) return prev
+      ;[arr[idx], arr[target]] = [arr[target], arr[idx]]
+      return { ...prev, projects: arr }
+    })
+  }
 
-  // ── Certifications
+  // Certifications are now objects: { id, name, issuer, year, credentialUrl }
   function addCertification() {
-    setResumeData(prev => ({ ...prev, certifications: [...prev.certifications, ''] }))
+    const blank = { id: uid(), name: '', issuer: '', year: '', credentialUrl: '' }
+    setResumeData(prev => ({ ...prev, certifications: [...prev.certifications, blank] }))
   }
-  function updateCertification(index, value) {
+  function updateCertification(id, field, value) {
     setResumeData(prev => ({
       ...prev,
-      certifications: prev.certifications.map((c, i) => i === index ? value : c),
+      certifications: prev.certifications.map(c => c.id === id ? { ...c, [field]: value } : c),
     }))
   }
-  function removeCertification(index) {
+  function removeCertification(id) {
     setResumeData(prev => ({
       ...prev,
-      certifications: prev.certifications.filter((_, i) => i !== index),
+      certifications: prev.certifications.filter(c => c.id !== id),
     }))
   }
 
-  // ── Theme
+  function clearForm() {
+    setResumeData(DEFAULT_DATA)
+    localStorage.removeItem('resumeData')
+  }
+
   function toggleTheme() {
     setTheme(t => t === 'light' ? 'dark' : 'light')
   }
@@ -213,8 +234,10 @@ export function useResumeStorage() {
     resumeData,
     activeTemplate,
     theme,
+    savedAt,
     setActiveTemplate,
     toggleTheme,
+    clearForm,
     updateField,
     updateLink,
     addSkill,
@@ -222,9 +245,11 @@ export function useResumeStorage() {
     addExperience,
     updateExperience,
     removeExperience,
+    moveExperience,
     addProject,
     updateProject,
     removeProject,
+    moveProject,
     addCertification,
     updateCertification,
     removeCertification,

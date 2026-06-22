@@ -1,14 +1,11 @@
 import { useState } from 'react'
 
-// Simple regex — good enough for UX feedback, not for security
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function BasicInfoForm({ data, onChange }) {
-  // Track which fields the user has "touched" so we only show
-  // errors after they've actually tried to type something
   const [touched, setTouched] = useState({ email: false, phone: false })
 
-  function blur(field) {
+  function touch(field) {
     setTouched(prev => ({ ...prev, [field]: true }))
   }
 
@@ -22,19 +19,17 @@ function BasicInfoForm({ data, onChange }) {
 
   return (
     <>
-      {/* Full Name */}
       <div className="form-group">
         <label htmlFor="name">Full Name</label>
         <input
           id="name"
           type="text"
-          placeholder="e.g. Tarun TS"
+          placeholder="e.g. Alex Johnson"
           value={data.name}
           onChange={e => onChange('name', e.target.value)}
         />
       </div>
 
-      {/* Job Title — appears right under the name in every template */}
       <div className="form-group">
         <label htmlFor="jobTitle">Job Title / Role</label>
         <input
@@ -46,30 +41,28 @@ function BasicInfoForm({ data, onChange }) {
         />
       </div>
 
-      {/* Email with validation */}
       <div className={`form-group ${emailError ? 'has-error' : ''}`}>
         <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
-          placeholder="e.g. tarun@gmail.com"
+          placeholder="e.g. alex@example.com"
           value={data.email}
           onChange={e => onChange('email', e.target.value)}
-          onBlur={() => blur('email')}
+          onBlur={() => touch('email')}
         />
         {emailError && <span className="field-error">{emailError}</span>}
       </div>
 
-      {/* Phone with validation */}
       <div className={`form-group ${phoneError ? 'has-error' : ''}`}>
         <label htmlFor="phone">Phone</label>
         <input
           id="phone"
           type="tel"
-          placeholder="e.g. 9876543210"
+          placeholder="e.g. +1 (555) 123-4567"
           value={data.phone}
           onChange={e => onChange('phone', e.target.value)}
-          onBlur={() => blur('phone')}
+          onBlur={() => touch('phone')}
         />
         {phoneError && <span className="field-error">{phoneError}</span>}
       </div>

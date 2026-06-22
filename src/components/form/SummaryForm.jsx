@@ -1,8 +1,8 @@
-const MAX_CHARS = 300
+const MAX_CHARS = 500
 
 function SummaryForm({ summary, onChange }) {
   const count   = summary.length
-  const isClose = count >= 250
+  const isClose = count >= 400
   const isOver  = count >= MAX_CHARS
 
   return (
@@ -17,7 +17,7 @@ function SummaryForm({ summary, onChange }) {
         id="summary"
         rows={4}
         maxLength={MAX_CHARS}
-        placeholder="e.g. First-year CSE student at VIT passionate about Full Stack and AI."
+        placeholder="e.g. Full-stack developer with 2 years of experience building scalable web apps. Passionate about clean code and great UX."
         value={summary}
         onChange={e => onChange(e.target.value)}
       />

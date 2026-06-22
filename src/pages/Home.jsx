@@ -1,14 +1,16 @@
-import Navbar          from '../components/Navbar'
-import ResumeForm      from '../components/ResumeForm'
-import ResumePreview   from '../components/ResumePreview'
+import Navbar        from '../components/Navbar'
+import ResumeForm    from '../components/ResumeForm'
+import ResumePreview from '../components/ResumePreview'
 
 function Home(props) {
   const {
     resumeData,
     activeTemplate,
     theme,
+    savedAt,
     setActiveTemplate,
     toggleTheme,
+    clearForm,
     updateField,
     updateLink,
     addSkill,
@@ -16,15 +18,16 @@ function Home(props) {
     addExperience,
     updateExperience,
     removeExperience,
+    moveExperience,
     addProject,
     updateProject,
     removeProject,
+    moveProject,
     addCertification,
     updateCertification,
     removeCertification,
   } = props
 
-  // Bundle all mutation handlers so ResumeForm gets one clean prop
   const handlers = {
     updateField,
     updateLink,
@@ -33,9 +36,11 @@ function Home(props) {
     addExperience,
     updateExperience,
     removeExperience,
+    moveExperience,
     addProject,
     updateProject,
     removeProject,
+    moveProject,
     addCertification,
     updateCertification,
     removeCertification,
@@ -48,13 +53,11 @@ function Home(props) {
         onTemplateChange={setActiveTemplate}
         theme={theme}
         onToggleTheme={toggleTheme}
+        savedAt={savedAt}
       />
 
-      {/* ── Side-by-side editor ── */}
-      {/* On desktop: form (380 px) | preview (fills rest)  */}
-      {/* On mobile : stacked vertically                    */}
       <div className="editor-layout">
-        <ResumeForm data={resumeData} handlers={handlers} />
+        <ResumeForm data={resumeData} handlers={handlers} onClear={clearForm} />
         <ResumePreview data={resumeData} template={activeTemplate} />
       </div>
     </div>

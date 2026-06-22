@@ -1,5 +1,11 @@
 import { useState } from 'react'
 
+const SUGGESTIONS = [
+  'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python',
+  'Java', 'C++', 'MongoDB', 'PostgreSQL', 'Git',
+  'Docker', 'AWS', 'Next.js', 'GraphQL', 'Figma',
+]
+
 function SkillTags({ skills, onAdd, onRemove }) {
   const [input, setInput] = useState('')
 
@@ -14,11 +20,12 @@ function SkillTags({ skills, onAdd, onRemove }) {
       e.preventDefault()
       commit()
     }
-    // Backspace on an empty input removes the last chip
     if (e.key === 'Backspace' && input === '' && skills.length > 0) {
       onRemove(skills.length - 1)
     }
   }
+
+  const unusedSuggestions = SUGGESTIONS.filter(s => !skills.includes(s)).slice(0, 8)
 
   return (
     <div className="form-group">
@@ -39,6 +46,21 @@ function SkillTags({ skills, onAdd, onRemove }) {
           onBlur={commit}
         />
       </div>
+
+      {unusedSuggestions.length > 0 && (
+        <div className="skill-suggestions">
+          {unusedSuggestions.map(s => (
+            <button
+              key={s}
+              type="button"
+              className="skill-suggestion-chip"
+              onClick={() => onAdd(s)}
+            >
+              + {s}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

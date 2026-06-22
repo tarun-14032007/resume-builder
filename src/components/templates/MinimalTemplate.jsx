@@ -1,18 +1,16 @@
 import { LINK_META } from './ClassicTemplate'
 
-// ── Minimal Template ─────────────────────────────────────────
-// Ultra-clean. Lots of breathing room.
-// • Name is large and light-weight (font-weight 300)
-// • No color anywhere — black, white, and one thin accent rule
-// • Section headings are small, spaced, upper-case with a thin line
-// • Skills as outlined chips (no fill, just a border)
-// • Each experience / project is spaced apart so it breathes
 function MinimalTemplate({ data }) {
   const filledLinks = Object.entries(data.links).filter(([, url]) => url)
 
+  const contactItems = [
+    data.email && { label: data.email, icon: '📧' },
+    data.phone && { label: data.phone, icon: '📱' },
+    ...filledLinks.map(([k]) => ({ label: LINK_META[k].label, icon: LINK_META[k].icon })),
+  ].filter(Boolean)
+
   return (
     <div className="minimal">
-      {/* ── Header ── */}
       <header className="mn-header">
         {data.photo && (
           <img src={data.photo} alt="Profile" className="mn-photo" />
@@ -21,19 +19,15 @@ function MinimalTemplate({ data }) {
         {data.jobTitle && <p className="mn-title">{data.jobTitle}</p>}
 
         <div className="mn-contact">
-          {[data.email, data.phone, ...filledLinks.map(([k]) => LINK_META[k].label)]
-            .filter(Boolean)
-            .map((item, i, arr) => (
-              <span key={i} className="mn-contact-item">
-                {item}
-                {i < arr.length - 1 && <span className="mn-sep"> · </span>}
-              </span>
-            ))
-          }
+          {contactItems.map((item, i) => (
+            <span key={i} className="mn-contact-item">
+              {item.icon} {item.label}
+              {i < contactItems.length - 1 && <span className="mn-sep"> · </span>}
+            </span>
+          ))}
         </div>
       </header>
 
-      {/* ── Sections ── */}
       {data.summary && (
         <section className="mn-section">
           <h2 className="mn-heading">Profile</h2>
@@ -82,24 +76,43 @@ function MinimalTemplate({ data }) {
             <div key={proj.id} className="mn-entry">
               <div className="mn-entry-top">
                 <span className="mn-entry-company">{proj.name}</span>
+              </div>
+              {proj.techStack && (
+                <div className="mn-tech-row">
+                  {proj.techStack.split(',').map(t => (
+                    <span key={t} className="mn-tech-chip">{t.trim()}</span>
+                  ))}
+                </div>
+              )}
+              {proj.description && <p className="mn-para">{proj.description}</p>}
+              <div className="mn-entry-links">
                 {proj.githubLink && (
-                  <a href={proj.githubLink} className="mn-entry-link"
-                     target="_blank" rel="noreferrer">↗ View</a>
+                  <a href={proj.githubLink} className="mn-entry-link" target="_blank" rel="noreferrer">
+                    GitHub ↗
+                  </a>
+                )}
+                {proj.liveLink && (
+                  <a href={proj.liveLink} className="mn-entry-link" target="_blank" rel="noreferrer">
+                    Live Demo ↗
+                  </a>
                 )}
               </div>
-              {proj.techStack   && <p className="mn-entry-role">{proj.techStack}</p>}
-              {proj.description && <p className="mn-para">{proj.description}</p>}
             </div>
           ))}
         </section>
       )}
 
-      {data.certifications.filter(Boolean).length > 0 && (
+      {data.certifications.filter(c => c.name).length > 0 && (
         <section className="mn-section">
           <h2 className="mn-heading">Certifications</h2>
           <ul className="mn-cert-list">
-            {data.certifications.filter(Boolean).map((c, i) => (
-              <li key={i}>{c}</li>
+            {data.certifications.filter(c => c.name).map(c => (
+              <li key={c.id}>
+                {c.name}
+                {(c.issuer || c.year) && (
+                  <span className="mn-cert-meta"> · {[c.issuer, c.year].filter(Boolean).join(', ')}</span>
+                )}
+              </li>
             ))}
           </ul>
         </section>

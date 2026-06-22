@@ -1,0 +1,513 @@
+/* ============================================================
+   Template: Classic
+   One column, traditional. Georgia serif name, centered header,
+   ALL-CAPS headings with bottom border.
+   ============================================================ */
+.classic { padding: 48px 52px; }
+
+.cl-header { text-align: center; margin-bottom: 4px; }
+.cl-photo {
+  width: 80px; height: 80px;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid #e2e8f0;
+  margin-bottom: 10px;
+}
+.cl-name {
+  font-size: 30px; font-weight: 800;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #111827; letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.cl-job-title { font-size: 14px; color: #6b7280; margin-bottom: 10px; }
+
+.cl-contact {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 4px 10px;
+  font-size: 12px; color: #6b7280; margin-bottom: 6px;
+}
+.cl-contact-item { display: flex; align-items: center; gap: 3px; }
+.cl-dot { color: #d1d5db; }
+
+.cl-links {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; flex-wrap: wrap; font-size: 12px; margin-bottom: 4px;
+}
+.cl-links a { color: #374151; font-weight: 500; }
+.cl-links a:hover { color: #6366f1; }
+
+.cl-rule { border: none; border-top: 2px solid #111827; margin: 16px 0 20px; }
+
+.cl-section { margin-bottom: 18px; }
+.cl-heading {
+  font-size: 10.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #111827;
+  border-bottom: 1.5px solid #d1d5db;
+  padding-bottom: 4px; margin-bottom: 10px;
+}
+.cl-para { font-size: 12.5px; color: #374151; line-height: 1.65; }
+
+.cl-skills { display: flex; flex-wrap: wrap; gap: 5px; }
+.cl-skill-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #f9fafb;
+  font-size: 11.5px; color: #374151;
+}
+
+.cl-entry { margin-bottom: 14px; }
+.cl-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 2px;
+}
+.cl-entry-company { font-size: 13px; font-weight: 700; color: #111827; }
+.cl-entry-date    { font-size: 11.5px; color: #6b7280; flex-shrink: 0; }
+.cl-entry-role    { font-size: 12px; font-style: italic; color: #4b5563; margin-bottom: 3px; }
+.cl-entry-links   { display: flex; gap: 12px; margin-bottom: 3px; }
+.cl-entry-link    { font-size: 11.5px; color: #6366f1; }
+.cl-tech-row      { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.cl-tech-chip {
+  font-size: 11px; padding: 1px 7px;
+  background: #f3f4f6; border: 1px solid #e5e7eb;
+  border-radius: 4px; color: #6b7280;
+}
+
+.cl-cert-list li {
+  font-size: 12.5px; color: #374151;
+  padding-left: 16px; position: relative; margin-bottom: 4px;
+}
+.cl-cert-list li::before { content: '•'; position: absolute; left: 4px; color: #9ca3af; }
+.cl-cert-meta { font-size: 11px; color: #9ca3af; }
+
+
+/* ============================================================
+   Template: Modern (sidebar)
+   Full-width accent header + left sidebar + main content.
+   ============================================================ */
+.modern { display: flex; flex-direction: column; min-height: 1123px; }
+
+.mo-header {
+  background: #6366f1;
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 20px;
+}
+.mo-photo {
+  width: 72px; height: 72px;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+.mo-name  { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.mo-title { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+.mo-body { display: flex; flex: 1; }
+
+.mo-sidebar {
+  width: 220px; flex-shrink: 0;
+  background: #4338ca;
+  padding: 24px 18px;
+}
+.mo-sb-section { margin-bottom: 22px; }
+.mo-sb-heading {
+  font-size: 9.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.8px;
+  color: rgba(255,255,255,0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding-bottom: 5px; margin-bottom: 10px;
+}
+.mo-sb-item {
+  font-size: 11.5px; color: rgba(255,255,255,0.85);
+  margin-bottom: 6px; word-break: break-word;
+  display: flex; align-items: flex-start; gap: 5px;
+}
+.mo-skills { display: flex; flex-wrap: wrap; gap: 5px; }
+.mo-skill-chip {
+  display: inline-block; padding: 3px 9px;
+  background: rgba(255,255,255,0.15); color: #fff;
+  border-radius: 20px; font-size: 11px; font-weight: 500;
+}
+.mo-sb-link {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: rgba(255,255,255,0.8);
+  margin-bottom: 7px;
+}
+.mo-sb-link:hover { color: #fff; text-decoration: none; }
+
+.mo-main { flex: 1; padding: 24px 28px; }
+.mo-section { margin-bottom: 18px; }
+.mo-heading {
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #6366f1;
+  border-left: 3px solid #6366f1;
+  padding-left: 8px; margin-bottom: 10px;
+}
+.mo-para { font-size: 12px; color: #374151; line-height: 1.65; }
+.mo-entry { margin-bottom: 12px; }
+.mo-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 2px;
+}
+.mo-entry-company { font-size: 13px; font-weight: 700; color: #111827; }
+.mo-entry-date    { font-size: 11px; color: #6b7280; flex-shrink: 0; }
+.mo-entry-role    { font-size: 12px; font-style: italic; color: #4b5563; margin-bottom: 3px; }
+.mo-entry-links   { display: flex; gap: 10px; margin-bottom: 3px; }
+.mo-entry-link    { font-size: 11px; color: #6366f1; }
+.mo-tech-row      { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.mo-tech-chip {
+  font-size: 10.5px; padding: 1px 7px;
+  background: #eef2ff; border: 1px solid #c7d2fe;
+  border-radius: 4px; color: #4f46e5;
+}
+.mo-cert-list li {
+  font-size: 12px; color: #374151;
+  padding-left: 14px; position: relative; margin-bottom: 4px;
+}
+.mo-cert-list li::before { content: '✓'; position: absolute; left: 0; color: #6366f1; font-size: 10px; }
+.mo-cert-meta { font-size: 10.5px; color: #9ca3af; }
+
+
+/* ============================================================
+   Template: Minimal
+   Ultra-clean, generous whitespace. No color except black/grey.
+   Thin font-weight name, outlined skill chips.
+   ============================================================ */
+.minimal { padding: 56px 60px; }
+
+.mn-header { text-align: center; margin-bottom: 8px; }
+.mn-photo {
+  width: 72px; height: 72px;
+  border-radius: 50%; object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid #e5e7eb;
+}
+.mn-name {
+  font-size: 34px; font-weight: 300;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: #111827; margin-bottom: 6px;
+}
+.mn-title {
+  font-size: 12px; color: #9ca3af;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.mn-contact {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 6px;
+  font-size: 11.5px; color: #9ca3af;
+}
+.mn-contact-item { display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+.mn-sep { color: #d1d5db; margin: 0 4px; }
+
+.mn-section {
+  margin-top: 28px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+}
+.mn-heading {
+  font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: #9ca3af; margin-bottom: 14px;
+}
+.mn-para { font-size: 12.5px; color: #4b5563; line-height: 1.75; }
+
+.mn-skills { display: flex; flex-wrap: wrap; gap: 7px; }
+.mn-skill-chip {
+  display: inline-block; padding: 4px 12px;
+  border: 1px solid #d1d5db; color: #4b5563;
+  border-radius: 20px; font-size: 11.5px;
+}
+
+.mn-entry { margin-bottom: 16px; }
+.mn-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 3px;
+}
+.mn-entry-company { font-size: 13px; font-weight: 600; color: #111827; }
+.mn-entry-date    { font-size: 11px; color: #9ca3af; flex-shrink: 0; }
+.mn-entry-role    { font-size: 11.5px; color: #6b7280; margin-bottom: 4px; }
+.mn-entry-links   { display: flex; gap: 10px; margin-bottom: 3px; }
+.mn-entry-link    { font-size: 11.5px; color: #374151; text-decoration: underline; }
+.mn-tech-row      { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px; }
+.mn-tech-chip {
+  font-size: 11px; padding: 2px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px; color: #6b7280;
+}
+
+.mn-cert-list li {
+  font-size: 12px; color: #4b5563;
+  padding-left: 14px; position: relative; margin-bottom: 5px;
+}
+.mn-cert-list li::before { content: '—'; position: absolute; left: 0; color: #d1d5db; }
+.mn-cert-meta { font-size: 11px; color: #9ca3af; }
+
+
+/* ============================================================
+   Template: Developer
+   GitHub README aesthetic. Monospace accents, code chips.
+   ============================================================ */
+.developer {
+  padding: 40px 44px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.dv-header { margin-bottom: 16px; }
+.dv-header-left { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
+.dv-photo {
+  width: 64px; height: 64px;
+  border-radius: 50%; object-fit: cover;
+  border: 2px solid #e5e7eb;
+}
+.dv-name { font-size: 28px; font-weight: 800; color: #111827; letter-spacing: -0.5px; }
+.dv-title { font-size: 13px; color: #6b7280; margin-top: 2px; }
+.dv-prompt { color: #6366f1; font-family: monospace; font-weight: 700; }
+
+.dv-contact {
+  display: flex; flex-wrap: wrap; gap: 10px 16px;
+  font-size: 12px; color: #6b7280;
+}
+.dv-contact-item { display: flex; align-items: center; gap: 4px; }
+.dv-contact-link { color: #6366f1; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+
+.dv-rule { border: none; border-top: 2px solid #111827; margin-bottom: 20px; }
+
+.dv-section { margin-bottom: 18px; }
+.dv-heading {
+  font-size: 15px; font-weight: 800; color: #111827;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.dv-hash { color: #6366f1; font-family: 'Courier New', monospace; font-weight: 400; }
+.dv-para { font-size: 12.5px; color: #374151; line-height: 1.65; }
+
+.dv-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.dv-skill-chip {
+  display: inline-block; padding: 3px 10px;
+  background: #f3f4f6; border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px; color: #374151;
+}
+
+.dv-entry { margin-bottom: 14px; }
+.dv-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 3px;
+}
+.dv-entry-company { font-size: 13px; font-weight: 700; color: #111827; }
+.dv-arrow { color: #6366f1; margin-right: 4px; }
+.dv-entry-date {
+  font-family: 'Courier New', monospace;
+  font-size: 11px; color: #9ca3af;
+  background: #f9fafb; border: 1px solid #e5e7eb;
+  padding: 1px 7px; border-radius: 4px; flex-shrink: 0;
+}
+.dv-entry-role  { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+.dv-entry-links { display: flex; gap: 12px; margin-bottom: 4px; }
+.dv-entry-link  { font-size: 11.5px; color: #6366f1; }
+.dv-tech-row    { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px; }
+.dv-tech-chip {
+  font-family: 'Courier New', monospace; font-size: 11px;
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  color: #1d4ed8; padding: 1px 7px; border-radius: 4px;
+}
+
+.dv-cert-list li {
+  font-size: 12.5px; color: #374151;
+  margin-bottom: 5px; display: flex; align-items: center; gap: 8px;
+}
+.dv-cert-check { color: #22c55e; font-size: 13px; flex-shrink: 0; }
+.dv-cert-meta  { font-size: 11px; color: #9ca3af; }
+
+
+/* ============================================================
+   Template: Corporate
+   Professional navy blue header, clean two-column body.
+   Conservative, HR-friendly.
+   ============================================================ */
+.corporate { display: flex; flex-direction: column; min-height: 1123px; }
+
+.corp-header {
+  background: #1e3a5f;
+  padding: 32px 40px;
+  display: flex; align-items: center; gap: 20px;
+}
+.corp-photo {
+  width: 76px; height: 76px;
+  border-radius: 4px; object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.corp-header-text { flex: 1; }
+.corp-name {
+  font-size: 28px; font-weight: 700;
+  color: #fff; letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+.corp-title {
+  font-size: 14px; color: #93c5fd;
+  font-weight: 400; margin-bottom: 8px;
+}
+.corp-contact-row {
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+  font-size: 11.5px; color: rgba(255,255,255,0.8);
+}
+.corp-contact-item { display: flex; align-items: center; gap: 5px; }
+.corp-contact-link { color: #93c5fd; display: flex; align-items: center; gap: 5px; }
+.corp-contact-link:hover { color: #fff; text-decoration: none; }
+
+.corp-body { display: flex; flex: 1; }
+
+.corp-sidebar {
+  width: 240px; flex-shrink: 0;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 20px;
+}
+.corp-sb-section { margin-bottom: 22px; }
+.corp-sb-heading {
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #1e3a5f;
+  border-bottom: 2px solid #1e3a5f;
+  padding-bottom: 4px; margin-bottom: 10px;
+}
+.corp-sb-para { font-size: 12px; color: #374151; line-height: 1.6; }
+.corp-skills { display: flex; flex-wrap: wrap; gap: 5px; }
+.corp-skill-chip {
+  display: inline-block; padding: 3px 10px;
+  background: #dbeafe; border: 1px solid #bfdbfe;
+  border-radius: 4px; font-size: 11px; color: #1e40af;
+  font-weight: 500;
+}
+.corp-cert-list li {
+  font-size: 11.5px; color: #374151;
+  padding-left: 14px; position: relative;
+  margin-bottom: 6px; line-height: 1.4;
+}
+.corp-cert-list li::before { content: '▸'; position: absolute; left: 0; color: #1e3a5f; }
+.corp-cert-meta { font-size: 10.5px; color: #9ca3af; display: block; }
+
+.corp-main { flex: 1; padding: 24px 30px; }
+.corp-section { margin-bottom: 20px; }
+.corp-heading {
+  font-size: 10.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #1e3a5f;
+  border-bottom: 2px solid #1e3a5f;
+  padding-bottom: 4px; margin-bottom: 12px;
+}
+.corp-para { font-size: 12.5px; color: #374151; line-height: 1.65; }
+
+.corp-entry { margin-bottom: 14px; }
+.corp-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 2px;
+}
+.corp-entry-company {
+  font-size: 13px; font-weight: 700; color: #1e3a5f;
+}
+.corp-entry-date {
+  font-size: 11px; color: #6b7280;
+  background: #f1f5f9; padding: 1px 8px;
+  border-radius: 4px; flex-shrink: 0;
+}
+.corp-entry-role { font-size: 12px; color: #4b5563; margin-bottom: 3px; font-weight: 500; }
+.corp-entry-links { display: flex; gap: 12px; margin-bottom: 3px; }
+.corp-entry-link  { font-size: 11.5px; color: #1e40af; }
+.corp-tech-row    { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.corp-tech-chip {
+  font-size: 10.5px; padding: 1px 7px;
+  background: #dbeafe; border: 1px solid #bfdbfe;
+  border-radius: 3px; color: #1e40af;
+}
+
+
+/* ============================================================
+   Template: Student
+   Education-first. Academic focus, clean layout.
+   Warm accent (#7c3aed violet), readable for campus recruiting.
+   ============================================================ */
+.student { padding: 44px 50px; }
+
+.st-header { margin-bottom: 4px; }
+.st-top-row {
+  display: flex; align-items: center; gap: 18px; margin-bottom: 10px;
+}
+.st-photo {
+  width: 72px; height: 72px;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid #ede9fe;
+  flex-shrink: 0;
+}
+.st-name {
+  font-size: 28px; font-weight: 800;
+  color: #111827; letter-spacing: -0.3px;
+  margin-bottom: 3px;
+}
+.st-title { font-size: 13px; color: #7c3aed; font-weight: 600; }
+
+.st-contact-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 4px 12px; font-size: 11.5px; color: #6b7280;
+  margin-bottom: 4px;
+}
+.st-contact-item { display: flex; align-items: center; gap: 4px; }
+.st-contact-link { color: #7c3aed; display: flex; align-items: center; gap: 4px; }
+.st-contact-link:hover { text-decoration: none; color: #5b21b6; }
+.st-dot { color: #d1d5db; }
+
+.st-rule { border: none; border-top: 3px solid #7c3aed; margin: 14px 0 18px; }
+
+.st-section { margin-bottom: 18px; }
+.st-heading {
+  font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #7c3aed;
+  margin-bottom: 10px; padding-bottom: 4px;
+  border-bottom: 1.5px solid #ede9fe;
+}
+.st-para { font-size: 12.5px; color: #374151; line-height: 1.65; }
+
+.st-edu-card {
+  background: #faf5ff;
+  border: 1px solid #ede9fe;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+.st-edu-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.st-edu-detail { font-size: 12px; color: #7c3aed; }
+
+.st-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.st-skill-chip {
+  display: inline-block; padding: 4px 12px;
+  background: #ede9fe; border: 1px solid #ddd6fe;
+  border-radius: 20px; font-size: 11.5px;
+  color: #5b21b6; font-weight: 500;
+}
+
+.st-entry { margin-bottom: 14px; }
+.st-entry-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 2px;
+}
+.st-entry-company { font-size: 13px; font-weight: 700; color: #111827; }
+.st-entry-date    { font-size: 11.5px; color: #6b7280; flex-shrink: 0; }
+.st-entry-role    { font-size: 12px; color: #7c3aed; font-weight: 500; margin-bottom: 3px; }
+.st-entry-links   { display: flex; gap: 10px; margin-bottom: 3px; }
+.st-entry-link    { font-size: 11.5px; color: #7c3aed; }
+.st-tech-row      { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
+.st-tech-chip {
+  font-size: 11px; padding: 2px 8px;
+  background: #f3f0ff; border: 1px solid #ddd6fe;
+  border-radius: 20px; color: #6d28d9;
+}
+
+.st-cert-list li {
+  font-size: 12px; color: #374151;
+  padding-left: 16px; position: relative; margin-bottom: 5px;
+}
+.st-cert-list li::before { content: '◆'; position: absolute; left: 0; color: #7c3aed; font-size: 8px; top: 3px; }
+.st-cert-meta { font-size: 11px; color: #9ca3af; }

@@ -3,16 +3,16 @@ import { computeScore } from '../hooks/useResumeStorage'
 function ResumeScore({ data }) {
   const { score, tips } = computeScore(data)
 
-  // Colour shifts from red → amber → green as the score rises
   const color =
-    score >= 75 ? '#22c55e' :
-    score >= 45 ? '#f59e0b' :
+    score >= 80 ? '#22c55e' :
+    score >= 50 ? '#f59e0b' :
                   '#ef4444'
 
   const label =
-    score >= 75 ? 'Strong 🎉' :
-    score >= 45 ? 'Fair — keep going' :
-                  'Just getting started'
+    score >= 80 ? 'Excellent 🎉' :
+    score >= 50 ? 'Looking good, keep going' :
+    score >= 25 ? 'Just getting started' :
+                  'Fill in the basics first'
 
   return (
     <div className="score-card">
@@ -21,7 +21,6 @@ function ResumeScore({ data }) {
         <span className="score-pct" style={{ color }}>{score}%</span>
       </div>
 
-      {/* Progress bar */}
       <div className="score-bar-bg">
         <div
           className="score-bar-fill"
@@ -31,7 +30,6 @@ function ResumeScore({ data }) {
 
       <span className="score-label-text" style={{ color }}>{label}</span>
 
-      {/* Up to 3 tips so the card stays compact */}
       {tips.length > 0 && (
         <ul className="score-tips">
           {tips.slice(0, 3).map((tip, i) => (

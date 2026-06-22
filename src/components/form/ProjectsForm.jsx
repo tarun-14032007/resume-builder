@@ -1,4 +1,4 @@
-function ProjectsForm({ projects, onAdd, onUpdate, onRemove }) {
+function ProjectsForm({ projects, onAdd, onUpdate, onRemove, onMove }) {
   return (
     <div className="form-section">
       <div className="form-section-header">
@@ -9,8 +9,22 @@ function ProjectsForm({ projects, onAdd, onUpdate, onRemove }) {
       {projects.map((proj, idx) => (
         <div key={proj.id} className="entry-card">
           <div className="entry-card-header">
-            <span className="entry-num">Project {idx + 1}</span>
-            <button className="remove-btn" onClick={() => onRemove(proj.id)}>Remove</button>
+            <span className="entry-num">#{idx + 1}</span>
+            <div className="entry-card-actions">
+              <button
+                className="reorder-btn"
+                onClick={() => onMove(proj.id, 'up')}
+                disabled={idx === 0}
+                title="Move up"
+              >↑</button>
+              <button
+                className="reorder-btn"
+                onClick={() => onMove(proj.id, 'down')}
+                disabled={idx === projects.length - 1}
+                title="Move down"
+              >↓</button>
+              <button className="remove-btn" onClick={() => onRemove(proj.id)}>Remove</button>
+            </div>
           </div>
 
           <div className="form-group">
@@ -23,7 +37,7 @@ function ProjectsForm({ projects, onAdd, onUpdate, onRemove }) {
           </div>
 
           <div className="form-group">
-            <label>Tech Stack</label>
+            <label>Tech Stack <span className="hint">(comma-separated)</span></label>
             <input
               placeholder="e.g. React, Node.js, MongoDB"
               value={proj.techStack}
@@ -35,7 +49,7 @@ function ProjectsForm({ projects, onAdd, onUpdate, onRemove }) {
             <label>Description</label>
             <textarea
               rows={2}
-              placeholder="What does it do?"
+              placeholder="What does it do? What problem does it solve?"
               value={proj.description}
               onChange={e => onUpdate(proj.id, 'description', e.target.value)}
             />
@@ -48,6 +62,16 @@ function ProjectsForm({ projects, onAdd, onUpdate, onRemove }) {
               placeholder="https://github.com/username/project"
               value={proj.githubLink}
               onChange={e => onUpdate(proj.id, 'githubLink', e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Live Demo <span className="hint">(optional)</span></label>
+            <input
+              type="url"
+              placeholder="https://myproject.vercel.app"
+              value={proj.liveLink}
+              onChange={e => onUpdate(proj.id, 'liveLink', e.target.value)}
             />
           </div>
         </div>
