@@ -1,17 +1,11 @@
 import Home from './pages/Home'
 import { useResumeStorage } from './hooks/useResumeStorage'
 
+// All state and persistence lives in the hook.
+// App.jsx just connects it to the page.
 function App() {
-  const { resumeData, updateField, activeTemplate, setActiveTemplate } = useResumeStorage()
-
-  return (
-    <Home
-      resumeData={resumeData}
-      onChange={updateField}
-      activeTemplate={activeTemplate}
-      setActiveTemplate={setActiveTemplate}
-    />
-  )
+  const storage = useResumeStorage()
+  return <Home {...storage} />
 }
 
 export default App

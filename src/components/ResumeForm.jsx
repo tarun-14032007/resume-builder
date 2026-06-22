@@ -1,62 +1,76 @@
-function ResumeForm({ data, onChange }) {
+import PhotoUpload         from './form/PhotoUpload'
+import BasicInfoForm       from './form/BasicInfoForm'
+import SummaryForm         from './form/SummaryForm'
+import SkillTags           from './form/SkillTags'
+import LinksForm           from './form/LinksForm'
+import ExperienceForm      from './form/ExperienceForm'
+import ProjectsForm        from './form/ProjectsForm'
+import CertificationsForm  from './form/CertificationsForm'
+import ResumeScore         from './ResumeScore'
+
+// This component is intentionally thin — each section is its own file,
+// so adding/removing a section is one line here, not a 400-line hunt.
+function ResumeForm({ data, handlers }) {
   return (
     <div className="form-panel">
-      <h2 className="panel-title">Your Details</h2>
-
-      <div className="form-group">
-        <label htmlFor="name">Full Name</label>
-        <input
-          id="name"
-          type="text"
-          placeholder="e.g. Tarun TS"
-          value={data.name}
-          onChange={e => onChange('name', e.target.value)}
-        />
+      <div className="form-panel-header">
+        <h2 className="panel-title">Your Details</h2>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="email">Email Address</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="e.g. tarun@gmail.com"
-          value={data.email}
-          onChange={e => onChange('email', e.target.value)}
-        />
-      </div>
+      <div className="form-panel-body">
+        {/* Resume strength indicator at the top of the form */}
+        <ResumeScore data={data} />
 
-      <div className="form-group">
-        <label htmlFor="phone">Phone Number</label>
-        <input
-          id="phone"
-          type="tel"
-          placeholder="e.g. 9876543210"
-          value={data.phone}
-          onChange={e => onChange('phone', e.target.value)}
+        <PhotoUpload
+          photo={data.photo}
+          onUpload={photo => handlers.updateField('photo', photo)}
         />
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="education">Education</label>
-        <textarea
-          id="education"
-          rows={3}
-          placeholder="e.g. B.Tech CSE — VIT Vellore (2021–2025)"
-          value={data.education}
-          onChange={e => onChange('education', e.target.value)}
+        <BasicInfoForm data={data} onChange={handlers.updateField} />
+
+        <SummaryForm
+          summary={data.summary}
+          onChange={val => handlers.updateField('summary', val)}
         />
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="skills">
-          Skills <span className="hint">(comma separated)</span>
-        </label>
-        <textarea
-          id="skills"
-          rows={3}
-          placeholder="e.g. React, JavaScript, C++, Node.js"
-          value={data.skills}
-          onChange={e => onChange('skills', e.target.value)}
+        <SkillTags
+          skills={data.skills}
+          onAdd={handlers.addSkill}
+          onRemove={handlers.removeSkill}
+        />
+
+        <LinksForm links={data.links} onUpdate={handlers.updateLink} />
+
+        <div className="form-group">
+          <label htmlFor="education">Education</label>
+          <textarea
+            id="education"
+            rows={3}
+            placeholder="e.g. B.Tech CSE — VIT Vellore (2021–2025)"
+            value={data.education}
+            onChange={e => handlers.updateField('education', e.target.value)}
+          />
+        </div>
+
+        <ExperienceForm
+          experience={data.experience}
+          onAdd={handlers.addExperience}
+          onUpdate={handlers.updateExperience}
+          onRemove={handlers.removeExperience}
+        />
+
+        <ProjectsForm
+          projects={data.projects}
+          onAdd={handlers.addProject}
+          onUpdate={handlers.updateProject}
+          onRemove={handlers.removeProject}
+        />
+
+        <CertificationsForm
+          certifications={data.certifications}
+          onAdd={handlers.addCertification}
+          onUpdate={handlers.updateCertification}
+          onRemove={handlers.removeCertification}
         />
       </div>
     </div>

@@ -1,66 +1,66 @@
 import { useRef } from 'react'
 import { downloadResumeAsPDF } from '../utils/downloadPDF'
+import ClassicTemplate   from './templates/ClassicTemplate'
+import ModernTemplate    from './templates/ModernTemplate'
+import MinimalTemplate   from './templates/MinimalTemplate'
+import DeveloperTemplate from './templates/DeveloperTemplate'
+
+// Map template ID → component
+const TEMPLATE_MAP = {
+  classic:   ClassicTemplate,
+  modern:    ModernTemplate,
+  minimal:   MinimalTemplate,
+  developer: DeveloperTemplate,
+}
+
+// ATS note per template
+const ATS_BADGE = {
+  classic:   { ok: true,  text: 'ATS Friendly ✓'        },
+  modern:    { ok: false, text: 'Sidebar may skip ATS ⚠' },
+  minimal:   { ok: true,  text: 'ATS Friendly ✓'        },
+  developer: { ok: true,  text: 'ATS Friendly ✓'        },
+}
 
 function ResumePreview({ data, template }) {
-  const previewRef = useRef(null)
+  const pageRef = useRef(null)
 
-  // Turn the skills string into a proper array, dropping any empty entries
-  const skillList = data.skills
-    ? data.skills.split(',').map(s => s.trim()).filter(Boolean)
-    : []
-
-  // Don't show the download button until the user has typed something
-  const hasContent = data.name || data.email || data.phone
+  const hasContent  = data.name || data.email || data.phone
+  const TemplateComp = TEMPLATE_MAP[template] || ClassicTemplate
+  const atsBadge    = ATS_BADGE[template]
 
   return (
     <div className="preview-panel">
-      <div className="preview-header">
-        <h2 className="panel-title">Live Preview</h2>
+      {/* ── Toolbar ── */}
+      <div className="preview-toolbar">
+        <span className={`ats-badge ${atsBadge.ok ? 'ats-ok' : 'ats-warn'}`}>
+          {atsBadge.text}
+        </span>
+
         <button
           className="download-btn"
           disabled={!hasContent}
-          title={!hasContent ? 'Add your name first to enable download' : 'Download as PDF'}
-          onClick={() => downloadResumeAsPDF(previewRef)}
+          title={!hasContent ? 'Fill in your name first' : 'Download as PDF'}
+          onClick={() => downloadResumeAsPDF(pageRef)}
         >
           ⬇ Download PDF
         </button>
       </div>
 
-      {/* This div is what gets captured and exported as a PDF */}
-      <div ref={previewRef} className={`resume-sheet template-${template}`}>
+      {/* ── Scrollable area around the A4 page ── */}
+      <div className="preview-scroll">
         {!hasContent ? (
-          <p className="empty-state">
-            Start typing on the left to see your resume here ✨
-          </p>
+          <div className="preview-empty">
+            <p>Start filling in the form to see your resume here ✨</p>
+          </div>
         ) : (
-          <>
-            <div className="resume-header">
-              {data.name && <h1 className="resume-name">{data.name}</h1>}
-              <div className="resume-contact">
-                {data.email && <span>{data.email}</span>}
-                {data.email && data.phone && <span className="dot">·</span>}
-                {data.phone && <span>{data.phone}</span>}
-              </div>
-            </div>
-
-            {data.education && (
-              <div className="resume-section">
-                <h3 className="section-title">Education</h3>
-                <p className="section-content">{data.education}</p>
-              </div>
-            )}
-
-            {skillList.length > 0 && (
-              <div className="resume-section">
-                <h3 className="section-title">Skills</h3>
-                <div className="skills-grid">
-                  {skillList.map((skill, i) => (
-                    <span key={i} className="skill-tag">{skill}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
+          /*
+           * .resume-page is exactly 794 × min-1123 px (A4 at 96 dpi).
+           * html2canvas captures only this div, so the PDF always looks
+           * like a real A4 sheet — no UI chrome bleeds in.
+           */
+          <div ref={pageRef} className="resume-page">
+            <TemplateComp data={data} />
+          </div>
         )}
       </div>
     </div>
